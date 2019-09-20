@@ -13,11 +13,31 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.servlet.http.HttpServletRequest;
+import java.util.Random;
+
 @Controller
 @RequestMapping("/user")
 public class UserController extends BaseController {
     @Autowired
     private UserService userService;
+    @Autowired
+    private HttpServletRequest httpServletRequest;
+
+    @RequestMapping("/getOpt")
+    @ResponseBody
+    public CommonReturnType getOpt(@RequestParam(name="telphone") String telphone) {
+        //按照一定规则生成opt验证码
+        Random random = new Random();
+        int num = random.nextInt(99999);
+        num += 10000;
+        String optCode = String.valueOf(num);
+        System.out.println("telphone=" + telphone+"optCode="+optCode);
+        //将opt验证码同对应手机号关联
+        httpServletRequest.getSession().setAttribute(telphone,optCode);
+        //将opt验证码通过短信通道发送给用户,省略
+        return CommonReturnType.create(null);
+    }
 
     @RequestMapping("/get")
     @ResponseBody

@@ -13,23 +13,11 @@ import org.springframework.web.bind.annotation.RestController;
  * Hello world!
  */
 @SpringBootApplication(scanBasePackages = {"com.miaoshaproject"})
-@RestController
 @MapperScan("com.miaoshaproject.dao")
 public class App {
-    @Autowired
-    private UserDOMapper userDOMapper;
-
-    @RequestMapping("/")
-    public String home() {
-        UserDO userDO = userDOMapper.selectByPrimaryKey(1);
-        if(userDO == null){
-            return "用户对象不存在";
-        }
-        return userDO.getName();
-    }
 
     public static void main(String[] args) {
-        System.out.println("Hello World");
+        System.out.println("God said i would surpass hi");
         SpringApplication.run(App.class, args);
     }
 }
